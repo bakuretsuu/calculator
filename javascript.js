@@ -34,10 +34,21 @@ let numberButton = document.querySelectorAll('.number');
 let screen = document.querySelector('.screen');
 
 let currentDisplay = "";
+let firstNumberStr = "";
+let secondNumberStr = "";
+
 numberButton.forEach(button => {
     button.addEventListener('click', () =>{
         currentDisplay += button.textContent;
         screen.textContent = currentDisplay;
+
+        if (operator === ''){
+            firstNumberStr += button.textContent;
+            screen.textContent = firstNumberStr;
+        } else {
+            secondNumberStr += button.textContent;
+            screen.textContent = secondNumberStr;
+        }
     });
 });
 
@@ -48,26 +59,34 @@ operatorButton.forEach(button => {
         let value = button.textContent;
 
         if (value === "=") {
-            const result = evaluateExpression(currentDisplay);
-            screen.textContent = result;
+            let result = operate(operator, parseFloat(firstNumberStr), parseFloat(secondNumberStr));
+            screen.textContent = result.toFixed(4);
+
+            firstNumberStr = result.toString();
+            secondNumberStr = '';
+            operator = '';
+            currentDisplay = result.toString();
         } else if (value.toLowerCase() === "c") {
-            currentDisplay = "";
-            screen.textContent = "0";
-        } else {
-            currentDisplay += value;
-            screen.textContent = currentDisplay;
+            currentDisplay = '';
+            firstNumberStr = '';
+            secondNumberStr = '';
+            operator = '';
+            screen.textContent = '0';
+        } else if (operator !== '' && firstNumberStr !== '' && secondNumberStr !== '' ) {
+            let result = operate(operator, parseFloat(firstNumberStr), parseFloat(secondNumberStr));
+            firstNumberStr = result.toString();
+            secondNumberStr = '';
+            operator = value;
+            screen.textContent = result;
+        }else {
+            operator = value;
+            screen.textContent = operator.toFixed(4);
         }        
     });
 });
 
 
-function evaluateExpression(expression){
-    let number = expression.split(/\D/).map(num => parseFloat(num));
-    let operator = expression.match(/[+\-x÷]/)?.[0]; 
 
-  
-    return operate(operator, number[0], number[1]);
-}
  
 
  
