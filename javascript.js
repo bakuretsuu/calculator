@@ -60,7 +60,7 @@ operatorButton.forEach(button => {
 
         if (value === "=") {
             let result = operate(operator, parseFloat(firstNumberStr), parseFloat(secondNumberStr));
-            screen.textContent = result.toFixed(4);
+            screen.textContent =  Number.isInteger(result) ? result : result.toFixed(4);
 
             firstNumberStr = result.toString();
             secondNumberStr = '';
@@ -80,7 +80,7 @@ operatorButton.forEach(button => {
             screen.textContent = result;
         }else {
             operator = value;
-            screen.textContent = operator.toFixed(4);
+            screen.textContent =  Number.isInteger(result) ? result : result.toFixed(4);
         }        
     });
 });
