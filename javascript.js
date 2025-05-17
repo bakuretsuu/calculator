@@ -19,13 +19,13 @@ let secondNumber = 0;
 let operator = '';
 
 function operate(operator, firstNumber, secondNumber){
-    if (operator === "add"){
+    if (operator == "+"){
         return add(firstNumber,secondNumber);
-    } else if (operator === "subtract"){
+    } else if (operator == "-"){
         return subtract(firstNumber,secondNumber);
-    } else if (operator === "multiply"){
+    } else if (operator == "x"){
         return multiply(firstNumber,secondNumber);
-    } else if (operator === "divide"){
+    } else if (operator == "÷"){
         return divide(firstNumber,secondNumber);
     }
 }
@@ -45,12 +45,29 @@ numberButton.forEach(button => {
 let operatorButton = document.querySelectorAll('.operator');
 operatorButton.forEach(button => {
     button.addEventListener('click', () =>{
-        currentDisplay += button.textContent;
-        screen.textContent = currentDisplay;
+        let value = button.textContent;
+
+        if (value === "=") {
+            const result = evaluateExpression(currentDisplay);
+            screen.textContent = result;
+        } else if (value.toLowerCase() === "c") {
+            currentDisplay = "";
+            screen.textContent = "0";
+        } else {
+            currentDisplay += value;
+            screen.textContent = currentDisplay;
+        }        
     });
 });
 
 
+function evaluateExpression(expression){
+    let number = expression.split(/\D/).map(num => parseFloat(num));
+    let operator = expression.match(/[+\-x÷]/)?.[0]; 
+
+  
+    return operate(operator, number[0], number[1]);
+}
  
 
  
