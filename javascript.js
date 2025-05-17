@@ -30,11 +30,27 @@ function operate(operator, firstNumber, secondNumber){
     }
 }
 
-const buttonsContainer = document.querySelector(".buttons");
+let numberButton = document.querySelectorAll('.number');
+let screen = document.querySelector('.screen');
 
- 
+let currentDisplay = "";
+numberButton.forEach(button => {
+    button.addEventListener('click', () =>{
+        currentDisplay += button.textContent;
+        screen.textContent = currentDisplay;
+    });
+});
 
-  
+
+let operatorButton = document.querySelectorAll('.operator');
+operatorButton.forEach(button => {
+    button.addEventListener('click', () =>{
+        currentDisplay += button.textContent;
+        screen.textContent = currentDisplay;
+    });
+});
+
+
  
 
  
